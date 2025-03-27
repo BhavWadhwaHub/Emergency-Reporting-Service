@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaflet Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <link rel="stylesheet" href="style-2.css">
+</head>
+<body>
+    <div class="heading">
+        <h1>Emergency Reporting Site</h1>
+    </div>
+    <div id="map"></div>
+    <div class="admin">
+        <label for="password">Enter Password to mark matter resolved:</label>
+        <input class = "password" type="password" name="admin" id="admin" required>
+        <button class="passwordButton">Enter</button>
+        <button class="exitButton">Exit</button>
+    </div>
+    <div class="infoBox">
+        <div class="infoContainer">
+            <h2>Reporters Information and Contact Details</h2>
+            <div class="info">
+                <label for="Name">Name:</label>
+                <input type="text" name="Name" id="Name" required>
+            </div>
+            <div class="info">
+                <label for="Phone">Phone:</label>
+                <input type="tel" name="Phone" id="Phone" required>
+            </div>
+            <div class="info">
+                <label for="Emergency">Emergency Type:</label>
+                <input type="text" name="Emergency" id="Emergency" required>
+            </div>
+                
+            <div class="info">
+                <label for="Location">Location: </label>
+                <input type="text" name="Location" id="Location" required>
+                <label for="Longitude">Longitude (Optional): </label>
+                <input type="text" name="Longitude" id="Longitude" >
+                <label for="Latitude">Latitude (Optional): </label>
+                <input type="text" name="Latitude" id="Latitude" >
+            </div>
+            <div class="info">
+                <label for="Image">Picture (Optional): </label>
+                <input type="file" name="Image" id="Image">
+            </div>
+            <div class="info">
+                <label for="comment">Comments (Optional): </label>
+                <input type="text" name="comment" id="comment">
+            </div>
+            <div>
+                <button class="submitButton" type="submit">Submit</button>
+            </div>
+        </div>
+    </div>
+    <div class="reports">
+        <h2>Emergency Reports</h2>
+        <table class="reportTable">
+            <thead>
+                <tr>
+                    <th>Location</th>
+                    <th>Type</th>
+                    <th>Time Reported</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+    <div class="accidentDisplay">
+        <div class="imageBox">
+            <img class="image" src="" alt="">
+        </div>
+        <div class="accidentInfo">
+        </div>
+    </div>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

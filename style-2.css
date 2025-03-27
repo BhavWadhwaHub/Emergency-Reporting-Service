@@ -1,0 +1,224 @@
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f9f9f9;
+    color: white;
+}
+
+/* Header */
+.heading {
+    text-align: center;
+    padding: 20px;
+    background: #b30000; /* Deep red for a strong emergency feel */
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    border-bottom: 5px solid #660000; /* Adds a bold emergency-like effect */
+}
+
+/* Map container */
+#map {
+    margin: auto;
+    height: 65vh;
+    width: 70vw;
+    border: 3px solid #ff0000; /* Emergency red border */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Admin Section */
+.admin {
+    margin: 20px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+    display: none; /* Hidden by default */
+    color: white;
+}
+
+.admin > label {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ff6666; /* Light red for text contrast */
+}
+
+.password {
+    width: 95%;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ff3333;
+    box-sizing: border-box;
+    background-color: #660000;
+    color: white;
+}
+
+.passwordButton, .exitButton {
+    background: #ff0000;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin: 5px;
+    transition: background 0.3s ease;
+}
+
+.passwordButton:hover, .exitButton:hover {
+    background: #cc0000;
+}
+
+/* Info Box */
+.infoBox {
+    text-align: center;
+    margin: 20px auto;
+}
+
+.infoContainer {
+    width: 80vw;
+    max-width: 500px;
+    margin: auto;
+    background: #1a1a1a;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #ff0000;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+    text-align: left;
+}
+
+.info label {
+    display: block;
+    margin-top: 15px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #ff4d4d; /* Red for field labels */
+}
+
+.info input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ff0000;
+    border-radius: 5px;
+    background: #1a1a1a;
+    color: white;
+    box-sizing: border-box;
+}
+
+.submitButton {
+    width: 100%;
+    padding: 15px;
+    background: #ff0000;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.submitButton:hover {
+    background: #cc0000;
+}
+
+/* Emergency Reports Section */
+.reports {
+    text-align: center;
+    margin: 20px auto;
+    color: white;
+}
+
+.reportTable {
+    width: 90%;
+    margin: auto;
+    border-collapse: collapse;
+    border: 2px solid #ff3333;
+    background: rgba(0, 0, 0, 0.9); /* Dark background for table */
+    color: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.reportTable th, .reportTable td {
+    border: 2px solid #ff6666; /* Light red border for table cells */
+    padding: 10px;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.reportTable th {
+    background: #660000;
+    color: white;
+    font-weight: bold;
+}
+
+.reportTable td {
+    background: #1a1a1a;
+}
+
+.reportTable td button {
+    background: #ff3333;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.reportTable td button:hover {
+    background: #cc0000;
+}
+
+/* Accident Display */
+.accidentDisplay {
+    visibility: hidden;
+    margin: 20px auto;
+    width: 80%;
+    max-width: 500px;
+    background: rgba(0, 0, 0, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #ff0000;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.accidentDisplay img {
+    max-width: 100%;
+    border: 2px solid #ff4d4d;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.accidentDisplay p {
+    font-size: 1rem;
+    margin: 10px 0;
+    color: #ff9999; /* Soft red for contrast */
+}
+
+/* Buttons for More Info and Actions */
+.accidentDisplay .infoButton {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px;
+    background: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.accidentDisplay .infoButton:hover {
+    background: #cc0000;
+}
