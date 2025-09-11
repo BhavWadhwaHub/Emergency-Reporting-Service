@@ -193,7 +193,7 @@ function addMarkerAndRow(report, addMarker = true) {
     accidentDisplayInfoText.style.cursor = "pointer";
 
     const crossImage = document.createElement("img");
-    crossImage.src = "Cross image.png";
+    crossImage.src = "cross.png";
     crossImage.alt = "cross image";
     crossImage.style.width = "50px";
     crossImage.style.cursor = "pointer";
