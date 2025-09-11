@@ -6,19 +6,22 @@
     <title>Leaflet Map</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
-    <link rel="stylesheet" href="style-2.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="heading">
         <h1>Emergency Reporting Site</h1>
     </div>
     <div id="map"></div>
-    <div class="admin">
-        <label for="password">Enter Password to mark matter resolved:</label>
-        <input class = "password" type="password" name="admin" id="admin" required>
-        <button class="passwordButton">Enter</button>
-        <button class="exitButton">Exit</button>
+    <div class="adminCover">
+        <div class="admin">
+            <label for="password">Enter Password to mark matter resolved:</label>
+            <input class = "password" type="password" name="admin" id="admin" required>
+            <button class="passwordButton">Enter</button>
+            <button class="exitButton">Exit</button>
+        </div>
     </div>
+    
     <div class="infoBox">
         <div class="infoContainer">
             <h2>Reporters Information and Contact Details</h2>
@@ -28,7 +31,7 @@
             </div>
             <div class="info">
                 <label for="Phone">Phone:</label>
-                <input type="tel" name="Phone" id="Phone" required>
+                <input type="tel" name="Phone" id="Phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="123-456-7890" required >
             </div>
             <div class="info">
                 <label for="Emergency">Emergency Type:</label>
@@ -57,7 +60,7 @@
         </div>
     </div>
     <div class="reports">
-        <h2>Emergency Reports</h2>
+        <h2 class="emergencyReport">Emergency Reports</h2>
         <table class="reportTable">
             <thead>
                 <tr>
