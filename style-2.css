@@ -10,12 +10,17 @@ body {
 /* Header */
 .heading {
     text-align: center;
-    padding: 20px;
+    padding: 15px;
     background: #b30000; /* Deep red for a strong emergency feel */
     color: white;
     font-size: 2rem;
     font-weight: bold;
     border-bottom: 5px solid #660000; /* Adds a bold emergency-like effect */
+    margin-bottom: 20px;
+}
+
+.emergencyReport{
+    color: black;
 }
 
 /* Map container */
@@ -30,16 +35,24 @@ body {
 
 /* Admin Section */
 .admin {
+    position: relative;
+    top: 850px;
     margin: 20px;
     padding: 20px;
     background: rgba(0, 0, 0, 0.8);
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-    width: 90%;
+    width: 30vw;
     max-width: 500px;
     text-align: center;
-    display: none; /* Hidden by default */
+    display: none; 
     color: white;
+    z-index:5;
+}
+
+.adminCover{
+    display: flex;
+    justify-content: center;
 }
 
 .admin > label {
@@ -77,6 +90,7 @@ body {
 
 /* Info Box */
 .infoBox {
+    display: flex;
     text-align: center;
     margin: 20px auto;
 }
@@ -123,6 +137,7 @@ body {
     font-size: 1.2rem;
     cursor: pointer;
     transition: background 0.3s ease;
+    margin-top: 10px;
 }
 
 .submitButton:hover {
