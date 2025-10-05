@@ -1,39 +1,49 @@
-/* General styles */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Merriweather',serif;
     margin: 0;
     padding: 0;
-    background: #f9f9f9;
+    background: #000000;
     color: white;
 }
-
-/* Header */
 .heading {
     text-align: center;
     padding: 15px;
-    background: #b30000; /* Deep red for a strong emergency feel */
+    background: #b30000;
     color: white;
     font-size: 2rem;
     font-weight: bold;
-    border-bottom: 5px solid #660000; /* Adds a bold emergency-like effect */
+    border-bottom: 5px solid #660000;
     margin-bottom: 20px;
 }
-
 .emergencyReport{
     color: black;
 }
-
-/* Map container */
+.logoutButton {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: #ff0000;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 1000;
+    font-size: 1rem;
+    transition: background 0.3s ease;
+}
+.logoutButton:hover {
+    background: #cc0000;
+}
 #map {
     margin: auto;
     height: 65vh;
     width: 70vw;
-    border: 3px solid #ff0000; /* Emergency red border */
+    border: 3px solid #ff0000;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-/* Admin Section */
 .admin {
     position: relative;
     top: 850px;
@@ -58,7 +68,7 @@ body {
 .admin > label {
     font-size: 1.2rem;
     font-weight: bold;
-    color: #ff6666; /* Light red for text contrast */
+    color: #ff6666;
 }
 
 .password {
@@ -87,8 +97,6 @@ body {
 .passwordButton:hover, .exitButton:hover {
     background: #cc0000;
 }
-
-/* Info Box */
 .infoBox {
     display: flex;
     text-align: center;
@@ -113,7 +121,7 @@ body {
     margin-top: 15px;
     font-size: 1rem;
     font-weight: bold;
-    color: #ff4d4d; /* Red for field labels */
+    color: #ff4d4d;
 }
 
 .info input {
@@ -143,12 +151,25 @@ body {
 .submitButton:hover {
     background: #cc0000;
 }
-
-/* Emergency Reports Section */
 .reports {
     text-align: center;
     margin: 20px auto;
     color: white;
+}
+.exportButton {
+    background: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px;
+    font-size: 1rem;
+    transition: background 0.3s ease;
+}
+
+.exportButton:hover {
+    background: #218838;
 }
 
 .reportTable {
@@ -156,14 +177,14 @@ body {
     margin: auto;
     border-collapse: collapse;
     border: 2px solid #ff3333;
-    background: rgba(0, 0, 0, 0.9); /* Dark background for table */
+    background: rgba(0, 0, 0, 0.9);
     color: white;
     border-radius: 10px;
     overflow: hidden;
 }
 
 .reportTable th, .reportTable td {
-    border: 2px solid #ff6666; /* Light red border for table cells */
+    border: 2px solid #ff6666;
     padding: 10px;
     text-align: center;
     font-size: 1rem;
@@ -192,8 +213,6 @@ body {
 .reportTable td button:hover {
     background: #cc0000;
 }
-
-/* Accident Display */
 .accidentDisplay {
     visibility: hidden;
     margin: 20px auto;
@@ -217,10 +236,8 @@ body {
 .accidentDisplay p {
     font-size: 1rem;
     margin: 10px 0;
-    color: #ff9999; /* Soft red for contrast */
+    color: #ff9999;
 }
-
-/* Buttons for More Info and Actions */
 .accidentDisplay .infoButton {
     display: inline-block;
     padding: 10px 20px;
