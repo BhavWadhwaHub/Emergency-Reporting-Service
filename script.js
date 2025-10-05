@@ -2,43 +2,42 @@
 const adminPasswordHash = CryptoJS.MD5("remove").toString(); // Hash the password
 const passwordBox = document.querySelector(".admin");
 const accidentDisplay = document.querySelector(".accidentDisplay");
+
 const map = L.map("map").setView([49.276765, -122.917957], 12);
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 }).addTo(map);
 
-let reports = JSON.parse(localStorage.getItem("emergencyReports")) || []; // Load reports from localStorage
-const markers = {}; // Object to keep track of markers
-
-// Render existing reports
+let reports = JSON.parse(localStorage.getItem("emergencyReports")) || []; 
+const markers = {}; 
 reports.forEach((report) => {
     addMarkerAndRow(report);
 });
 
-// Attach filtering functionality to map events
 map.on("moveend", filterReportsByMapBounds);
 map.on("zoomend", filterReportsByMapBounds);
 
 const submitButton = document.querySelector(".submitButton");
 
-submitButton.addEventListener("click", () => {
-    const name = document.querySelector("#Name").value;
-    const phone = document.querySelector("#Phone").value;
-    const emergency = document.querySelector("#Emergency").value;
-    const location = document.querySelector("#Location").value;
-    const longitude = document.querySelector("#Longitude").value;
-    const latitude = document.querySelector("#Latitude").value;
-    const comments = document.querySelector("#comment").value;
+submitButton.addEventListener("click", (event) => {
+    event.preventDefault(); 
+
+    const name = document.querySelector("#Name").value.trim();
+    const phone = document.querySelector("#Phone").value.trim();
+    const emergency = document.querySelector("#Emergency").value.trim();
+    const location = document.querySelector("#Location").value.trim();
+    const longitude = document.querySelector("#Longitude").value.trim();
+    const latitude = document.querySelector("#Latitude").value.trim();
+    const comments = document.querySelector("#comment").value.trim();
     const imageInput = document.querySelector("#Image").files[0];
 
     if (!name || !phone || !emergency || !location) {
         alert("Please fill in all the required fields: Name, Phone, Emergency Type, and Location.");
-        return; // Stop execution if validation fails
+        return;
     }
 
     let lat, lng;
 
-    // Use provided latitude/longitude or geocode the location
     if (longitude && latitude) {
         lat = parseFloat(latitude);
         lng = parseFloat(longitude);
@@ -47,101 +46,51 @@ submitButton.addEventListener("click", () => {
             alert("Invalid latitude or longitude. Please enter numerical values.");
             return;
         }
+        handleReport(lat, lng);
     } else {
         const geocoder = L.Control.Geocoder.nominatim();
         geocoder.geocode(location, (results) => {
             if (results.length === 0) {
-                alert("Could not find the location. Please enter a valid location name.");
+                alert("Could not find the location. Please try:\n- Using coordinates\n- Being more specific (e.g., '123 Main St, Burnaby, BC')");
                 return;
             }
-
             const { lat: geocodedLat, lng: geocodedLng } = results[0].center;
+            handleReport(geocodedLat, geocodedLng);
+        });
+    }
 
-            if (imageInput) {
-                const reader = new FileReader();
-                reader.onload = () => {
-                    saveAndRenderReport({
-                        lat: geocodedLat,
-                        lng: geocodedLng,
-                        name,
-                        phone,
-                        image: reader.result,
-                        emergency,
-                        location,
-                        comments,
-                    });
-                };
-                reader.readAsDataURL(imageInput);
-            } else {
+    function handleReport(lat, lng) {
+        if (imageInput) {
+            const reader = new FileReader();
+            reader.onload = () => {
                 saveAndRenderReport({
-                    lat: geocodedLat,
-                    lng: geocodedLng,
+                    lat,
+                    lng,
                     name,
                     phone,
-                    image: null,
+                    image: reader.result,
                     emergency,
                     location,
                     comments,
                 });
-            }
-        });
-        return;
-    }
-
-    if (imageInput) {
-        const reader = new FileReader();
-        reader.onload = () => {
+                console.log("✅ Report added with image");
+            };
+            reader.readAsDataURL(imageInput);
+        } else {
             saveAndRenderReport({
                 lat,
                 lng,
                 name,
                 phone,
-                image: reader.result,
+                image: null,
                 emergency,
                 location,
                 comments,
             });
-        };
-        reader.readAsDataURL(imageInput);
-    } else {
-        saveAndRenderReport({
-            lat,
-            lng,
-            name,
-            phone,
-            image: null,
-            emergency,
-            location,
-            comments,
-        });
+            console.log("✅ Report added without image");
+        }
     }
 });
-
-function filterReportsByMapBounds() {
-    const bounds = map.getBounds();
-    const reportTable = document.querySelector(".reportTable tbody");
-    reportTable.innerHTML = ""; // Clear the table
-
-    let visibleReports = 0;
-
-    reports.forEach((report) => {
-        const { lat, lng } = report;
-        if (bounds.contains([lat, lng])) {
-            addMarkerAndRow(report, false); // Avoid re-adding markers
-            visibleReports++;
-        }
-    });
-
-    if (
-        visibleReports === 0 ||
-        (accidentDisplay.dataset.lat &&
-            accidentDisplay.dataset.lng &&
-            !bounds.contains([parseFloat(accidentDisplay.dataset.lat), parseFloat(accidentDisplay.dataset.lng)]))
-    ) {
-        hideAccidentDisplay();
-    }
-}
-
 function saveAndRenderReport(report) {
     const currentTime = new Date().toLocaleString();
     const newReport = { ...report, time: currentTime, status: "OPEN" };
@@ -159,7 +108,6 @@ function saveAndRenderReport(report) {
     document.querySelector("#Latitude").value = "";
     document.querySelector("#comment").value = "";
 }
-
 function addMarkerAndRow(report, addMarker = true) {
     const { lat, lng, name, phone, image, emergency, location, comments, time, status } = report;
 
@@ -193,9 +141,9 @@ function addMarkerAndRow(report, addMarker = true) {
     accidentDisplayInfoText.style.cursor = "pointer";
 
     const crossImage = document.createElement("img");
-    crossImage.src = "cross.png";
-    crossImage.alt = "cross image";
-    crossImage.style.width = "50px";
+    crossImage.src = "cross.svg";
+    crossImage.alt = "Resolve";
+    crossImage.style.width = "24px";
     crossImage.style.cursor = "pointer";
 
     const div = document.createElement("div");
@@ -208,7 +156,7 @@ function addMarkerAndRow(report, addMarker = true) {
     if (status === "OPEN") {
         div.appendChild(crossImage);
     } else {
-        accidentDisplayInfoText.style.display = "none"; // Hide "More Info" text for resolved emergencies
+        accidentDisplayInfoText.style.display = "none"; 
     }
 
     linkCell.appendChild(div);
@@ -219,19 +167,18 @@ function addMarkerAndRow(report, addMarker = true) {
     newRow.appendChild(statusCell);
     newRow.appendChild(linkCell);
     reportTable.appendChild(newRow);
-
     accidentDisplayInfoText.addEventListener("click", () => {
         moreInfoClick(name, phone, image, emergency, location, comments, time, lat, lng);
     });
-
     crossImage.addEventListener("click", () => {
         showPasswordBox(() => {
             statusCell.innerText = "RESOLVED";
             crossImage.style.display = "none";
-            accidentDisplayInfoText.style.display = "none"; // Hide "More Info" text
-            hideAccidentDisplay(); // Hide accidentDisplay if visible
+            accidentDisplayInfoText.style.display = "none"; 
+            hideAccidentDisplay(); 
             map.removeLayer(markers[time]);
             delete markers[time];
+
             reports = reports.map((r) =>
                 r.time === time ? { ...r, status: "RESOLVED" } : r
             );
@@ -240,13 +187,30 @@ function addMarkerAndRow(report, addMarker = true) {
     });
 }
 
-function hideAccidentDisplay() {
-    accidentDisplay.innerHTML = ""; // Clear content
-    accidentDisplay.style.visibility = "hidden";
-    delete accidentDisplay.dataset.lat;
-    delete accidentDisplay.dataset.lng;
-}
+function filterReportsByMapBounds() {
+    const bounds = map.getBounds();
+    const reportTable = document.querySelector(".reportTable tbody");
+    reportTable.innerHTML = "";
 
+    let visibleReports = 0;
+
+    reports.forEach((report) => {
+        const { lat, lng } = report;
+        if (bounds.contains([lat, lng])) {
+            addMarkerAndRow(report, false);
+            visibleReports++;
+        }
+    });
+
+    if (
+        visibleReports === 0 ||
+        (accidentDisplay.dataset.lat &&
+            accidentDisplay.dataset.lng &&
+            !bounds.contains([parseFloat(accidentDisplay.dataset.lat), parseFloat(accidentDisplay.dataset.lng)]))
+    ) {
+        hideAccidentDisplay();
+    }
+}
 function showPasswordBox(onSuccess) {
     passwordBox.style.display = "block";
     const enterButton = document.querySelector(".passwordButton");
@@ -268,12 +232,15 @@ function showPasswordBox(onSuccess) {
             passwordBox.style.display = "none";
             passwordInput.value = "";
             onSuccess();
-        } else alert("Incorrect password!");
+        } else {
+            alert("Incorrect password!");
+        }
     }
 }
+
 function moreInfoClick(name, phone, image, emergency, location, comments, time, lat, lng) {
     accidentDisplay.innerHTML = "";
-    accidentDisplay.dataset.lat = lat; // Store lat and lng for visibility checks
+    accidentDisplay.dataset.lat = lat;
     accidentDisplay.dataset.lng = lng;
 
     if (image) {
@@ -313,4 +280,57 @@ function moreInfoClick(name, phone, image, emergency, location, comments, time, 
     accidentDisplay.appendChild(extraInfo);
 
     accidentDisplay.style.visibility = "visible";
+}
+function hideAccidentDisplay() {
+    accidentDisplay.innerHTML = "";
+    accidentDisplay.style.visibility = "hidden";
+    delete accidentDisplay.dataset.lat;
+    delete accidentDisplay.dataset.lng;
+}
+
+
+function exportToExcel() {
+    if (reports.length === 0) {
+        alert("No reports to export!");
+        return;
+    }
+
+    const excelData = reports.map((report, index) => ({
+        'Report #': index + 1,
+        'Name': report.name,
+        'Phone': report.phone,
+        'Emergency Type': report.emergency,
+        'Location': report.location,
+        'Latitude': report.lat,
+        'Longitude': report.lng,
+        'Time Reported': report.time,
+        'Status': report.status,
+        'Comments': report.comments || 'N/A',
+        'Has Image': report.image ? 'Yes' : 'No'
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(excelData);
+
+    worksheet['!cols'] = [
+        { wch: 10 },  // Report #
+        { wch: 20 },  // Name
+        { wch: 15 },  // Phone
+        { wch: 20 },  // Emergency Type
+        { wch: 30 },  // Location
+        { wch: 12 },  // Latitude
+        { wch: 12 },  // Longitude
+        { wch: 20 },  // Time Reported
+        { wch: 10 },  // Status
+        { wch: 30 },  // Comments
+        { wch: 10 }   // Has Image
+    ];
+
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Emergency Reports');
+    const date = new Date().toISOString().split('T')[0];
+    const filename = `Emergency_Reports_${date}.xlsx`;
+    XLSX.writeFile(workbook, filename);
+    
+    console.log(`✅ Exported ${reports.length} reports to ${filename}`);
+    alert(`Successfully exported ${reports.length} reports to ${filename}`);
 }
