@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script>
+    if (sessionStorage.getItem('authenticated') !== 'true') {
+        window.location.href = 'login.html';
+    }
+    function logout() {
+        sessionStorage.removeItem('authenticated');
+        window.location.href = 'login.html';
+    }
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leaflet Map</title>
@@ -9,14 +18,18 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <button onclick="logout()" class="logoutButton">Logout</button>
+    
     <div class="heading">
         <h1>Emergency Reporting Site</h1>
     </div>
+    
     <div id="map"></div>
+    
     <div class="adminCover">
         <div class="admin">
             <label for="password">Enter Password to mark matter resolved:</label>
-            <input class = "password" type="password" name="admin" id="admin" required>
+            <input class="password" type="password" name="admin" id="admin" required>
             <button class="passwordButton">Enter</button>
             <button class="exitButton">Exit</button>
         </div>
@@ -31,20 +44,19 @@
             </div>
             <div class="info">
                 <label for="Phone">Phone:</label>
-                <input type="tel" name="Phone" id="Phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="123-456-7890" required >
+                <input type="tel" name="Phone" id="Phone" placeholder="123-456-7890 or 1234567890" required>
             </div>
             <div class="info">
                 <label for="Emergency">Emergency Type:</label>
                 <input type="text" name="Emergency" id="Emergency" required>
             </div>
-                
             <div class="info">
                 <label for="Location">Location: </label>
                 <input type="text" name="Location" id="Location" required>
                 <label for="Longitude">Longitude (Optional): </label>
-                <input type="text" name="Longitude" id="Longitude" >
+                <input type="text" name="Longitude" id="Longitude">
                 <label for="Latitude">Latitude (Optional): </label>
-                <input type="text" name="Latitude" id="Latitude" >
+                <input type="text" name="Latitude" id="Latitude">
             </div>
             <div class="info">
                 <label for="Image">Picture (Optional): </label>
@@ -59,6 +71,7 @@
             </div>
         </div>
     </div>
+    
     <div class="reports">
         <h2 class="emergencyReport">Emergency Reports</h2>
         <table class="reportTable">
@@ -72,10 +85,10 @@
                 </tr>
             </thead>
             <tbody>
-
             </tbody>
         </table>
     </div>
+    
     <div class="accidentDisplay">
         <div class="imageBox">
             <img class="image" src="" alt="">
@@ -83,9 +96,11 @@
         <div class="accidentInfo">
         </div>
     </div>
+    
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
