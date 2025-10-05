@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Site Login</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Merriweather,serif;
+            background: linear-gradient(135deg, #660000 0%, #b30000 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: white;
+        }
+
+        .login-container {
+            background: rgba(0, 0, 0, 0.85);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            border: 2px solid #ff3333;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .login-container h1 {
+            margin-bottom: 10px;
+            font-size: 2rem;
+            color: #ff6666;
+        }
+
+        .login-container p {
+            margin-bottom: 30px;
+            color: #ffcccc;
+            font-size: 0.9rem;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #ff9999;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ff3333;
+            border-radius: 8px;
+            background: #1a1a1a;
+            color: white;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #ff6666;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: #ff0000;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.1s;
+        }
+
+        .login-btn:hover {
+            background: #cc0000;
+        }
+
+        .login-btn:active {
+            transform: scale(0.98);
+        }
+
+        .error-message {
+            display: none;
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(255, 0, 0, 0.2);
+            border: 1px solid #ff3333;
+            border-radius: 5px;
+            color: #ffcccc;
+        }
+
+        .error-message.show {
+            display: block;
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-10px);
+            }
+
+            75% {
+                transform: translateX(10px);
+            }
+        }
+
+        .shield-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #ff3333;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <div class="shield-icon">🛡️</div>
+        <h1>Emergency Portal</h1>
+        <p>Enter password to access the emergency reporting system</p>
+
+        <form id="loginForm">
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter password" required autofocus>
+            </div>
+
+            <button type="submit" class="login-btn">Access System</button>
+
+            <div id="errorMessage" class="error-message">
+                ❌ Incorrect password. Please try again.
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const CORRECT_PASSWORD_HASH = CryptoJS.MD5("emergency123").toString();
+
+        const loginForm = document.getElementById('loginForm');
+        const passwordInput = document.getElementById('password');
+        const errorMessage = document.getElementById('errorMessage');
+
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const enteredPassword = passwordInput.value;
+            const enteredHash = CryptoJS.MD5(enteredPassword).toString();
+
+            if (enteredHash === CORRECT_PASSWORD_HASH) {
+                sessionStorage.setItem('authenticated', 'true');
+                window.location.href = 'index.html';
+            } else {
+                errorMessage.classList.add('show');
+                passwordInput.value = '';
+                passwordInput.focus();
+                setTimeout(() => {
+                    errorMessage.classList.remove('show');
+                }, 3000);
+            }
+        });
+        if (sessionStorage.getItem('authenticated') === 'true') {
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+
+</html>
