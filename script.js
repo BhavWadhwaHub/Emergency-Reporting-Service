@@ -111,7 +111,7 @@ function saveAndRenderReport(report) {
 function addMarkerAndRow(report, addMarker = true) {
     const { lat, lng, name, phone, image, emergency, location, comments, time, status } = report;
 
-    if (addMarker) {
+    if (addMarker && status === "OPEN") {
         const newMarker = L.marker([lat, lng]).addTo(map);
         newMarker.bindPopup(`<b>${emergency}</b><br>${location}`).openPopup();
         markers[time] = newMarker;
@@ -140,11 +140,13 @@ function addMarkerAndRow(report, addMarker = true) {
     accidentDisplayInfoText.style.textDecoration = "underline";
     accidentDisplayInfoText.style.cursor = "pointer";
 
-    const crossImage = document.createElement("img");
-    crossImage.src = "cross.svg";
-    crossImage.alt = "Resolve";
-    crossImage.style.width = "24px";
+    const crossImage = document.createElement("span");
+    crossImage.textContent = "✕";
+    crossImage.title = "Resolve";
     crossImage.style.cursor = "pointer";
+    crossImage.style.color = "#ff3333";
+    crossImage.style.fontSize = "18px";
+    crossImage.style.fontWeight = "bold";
 
     const div = document.createElement("div");
     div.style.display = "flex";
